@@ -328,7 +328,7 @@ with st.form(key="my_form"):
 
         query_str = " ".join(query_list)
 
-        tweets = UncacheableList(
+        return UncacheableList(
             tweepy.Cursor(
                 # TODO: Set up Premium search?
                 twitter_api.search_tweets,
@@ -338,8 +338,6 @@ with st.form(key="my_form"):
                 include_entities=False,
             ).items(limit)
         )
-
-        return tweets
 
     # @st.experimental_memo
     @st.cache(**cache_args)
@@ -401,7 +399,7 @@ with st.form(key="my_form"):
     # Other utilities
 
     def rel_to_abs_date(days):
-        if days == None:
+        if days is None:
             return (datetime.date(day=1, month=1, year=1970),)
         return datetime.date.today() - datetime.timedelta(days=days)
 
